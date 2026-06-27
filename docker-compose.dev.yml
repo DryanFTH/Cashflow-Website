@@ -1,0 +1,15 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: dev
+        ports:
+            - '3000:3000'
+        environment:
+            - NODE_ENV=development
+            - DATABASE_URL=file:./prisma/dev.db
+        volumes:
+            - .:/app
+            - /app/node_modules
+            - /app/.next
