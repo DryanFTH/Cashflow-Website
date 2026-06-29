@@ -1,12 +1,11 @@
-import { prisma } from '@/lib/prisma';
-import { Prisma } from '@/lib/generated/prisma/client';
-
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ReportsFilter } from '@/components/reports/reports-filter';
-import { PrintButton } from '@/components/reports/print-button';
 import { CategoryBreakdownTable } from '@/components/reports/category-breakdown-table';
+import { PrintButton } from '@/components/reports/print-button';
+import { ReportsFilter } from '@/components/reports/reports-filter';
 import { TransactionsList } from '@/components/reports/transactions-list';
-import { formatCurrency, cn } from '@/lib/utils';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Prisma } from '@/lib/generated/prisma/client';
+import { prisma } from '@/lib/prisma';
+import { cn, formatCurrency } from '@/lib/utils';
 
 const MONTHS = [
     'Januari',
@@ -104,15 +103,15 @@ export default async function ReportsPage({ searchParams }: ReportsPageProps) {
               : `${MONTHS[parseInt(monthParam) - 1]} ${yearParam}`;
 
     return (
-        <div className="relative space-y-6">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between print:hidden">
+        <div className='relative space-y-6'>
+            <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between print:hidden'>
                 <div>
-                    <h1 className="text-2xl font-semibold tracking-tight">Laporan</h1>
-                    <p className="text-sm text-muted-foreground">
+                    <h1 className='text-2xl font-semibold tracking-tight'>Laporan</h1>
+                    <p className='text-sm text-muted-foreground'>
                         Filter dan analisis transaksi berdasarkan periode dan kategori.
                     </p>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className='flex items-center gap-2'>
                     <ReportsFilter
                         year={yearParam}
                         month={monthParam}
@@ -123,48 +122,50 @@ export default async function ReportsPage({ searchParams }: ReportsPageProps) {
                 </div>
             </div>
 
-            <div className="hidden print:block">
-                <h1 className="text-xl font-semibold">Laporan Keuangan — {periodLabel}</h1>
+            <div className='hidden print:block'>
+                <h1 className='text-xl font-semibold'>
+                    Laporan Keuangan — {periodLabel}
+                </h1>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+            <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5'>
                 <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground">
+                    <CardHeader className='pb-2'>
+                        <CardTitle className='text-sm font-medium text-muted-foreground'>
                             Jumlah Transaksi
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">{transactions.length}</div>
+                        <div className='text-2xl font-bold'>{transactions.length}</div>
                     </CardContent>
                 </Card>
                 <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground">
+                    <CardHeader className='pb-2'>
+                        <CardTitle className='text-sm font-medium text-muted-foreground'>
                             Total Pemasukan
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold text-emerald-400">
+                        <div className='text-2xl font-bold text-emerald-400'>
                             {formatCurrency(totalIncome)}
                         </div>
                     </CardContent>
                 </Card>
                 <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground">
+                    <CardHeader className='pb-2'>
+                        <CardTitle className='text-sm font-medium text-muted-foreground'>
                             Total Pengeluaran
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold text-rose-400">
+                        <div className='text-2xl font-bold text-rose-400'>
                             {formatCurrency(totalExpense)}
                         </div>
                     </CardContent>
                 </Card>
                 <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground">
+                    <CardHeader className='pb-2'>
+                        <CardTitle className='text-sm font-medium text-muted-foreground'>
                             Selisih
                         </CardTitle>
                     </CardHeader>
@@ -180,13 +181,15 @@ export default async function ReportsPage({ searchParams }: ReportsPageProps) {
                     </CardContent>
                 </Card>
                 <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground">
+                    <CardHeader className='pb-2'>
+                        <CardTitle className='text-sm font-medium text-muted-foreground'>
                             Rata-rata
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">{formatCurrency(averageAmount)}</div>
+                        <div className='text-2xl font-bold'>
+                            {formatCurrency(averageAmount)}
+                        </div>
                     </CardContent>
                 </Card>
             </div>

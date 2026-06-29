@@ -1,9 +1,17 @@
 'use client';
 
+import {
+    ArrowLeftRight,
+    BarChart3,
+    FileText,
+    LayoutDashboard,
+    Tags,
+    Wallet2,
+} from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
 import { cn } from '@/lib/utils';
-import { LayoutDashboard, ArrowLeftRight, Tags, BarChart3, Wallet2, FileText } from 'lucide-react';
 
 const navItems = [
     { href: '/', label: 'Dashboard', icon: LayoutDashboard },
@@ -17,12 +25,12 @@ const navItems = [
 export function Sidebar() {
     const pathname = usePathname();
     return (
-        <aside className="hidden md:flex w-60 flex-col border-r border-border bg-card px-3 py-6">
-            <div className="px-3 mb-8">
-                <h1 className="text-lg font-semibold">Cashflow</h1>
-                <p className="text-xs text-muted-foreground">Personal Finance</p>
+        <aside className='hidden md:flex w-60 flex-col border-r border-border bg-card px-3 py-6'>
+            <div className='px-3 mb-8'>
+                <h1 className='text-lg font-semibold'>Cashflow</h1>
+                <p className='text-xs text-muted-foreground'>Personal Finance</p>
             </div>
-            <nav className="flex flex-col gap-1">
+            <nav className='flex flex-col gap-1'>
                 {navItems.map(({ href, label, icon: Icon }) => (
                     <Link
                         key={href}
@@ -32,7 +40,7 @@ export function Sidebar() {
                             pathname === href && 'bg-accent text-foreground',
                         )}
                     >
-                        <Icon className="h-4 w-4" />
+                        <Icon className='h-4 w-4' />
                         {label}
                     </Link>
                 ))}

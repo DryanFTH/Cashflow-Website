@@ -1,8 +1,9 @@
-import { ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 import { format } from 'date-fns';
 import { id as localeId } from 'date-fns/locale';
-import { formatCurrency, cn } from '@/lib/utils';
+import { ArrowDownLeft, ArrowUpRight } from 'lucide-react';
+
 import { Category, Transaction } from '@/lib/generated/prisma/client';
+import { cn, formatCurrency } from '@/lib/utils';
 
 interface RecentTransactionsProps {
     transactions: (Transaction & { category: Category })[];
@@ -11,17 +12,19 @@ interface RecentTransactionsProps {
 export function RecentTransactions({ transactions }: RecentTransactionsProps) {
     if (transactions.length === 0) {
         return (
-            <p className="text-sm text-muted-foreground text-center py-8">Belum ada transaksi.</p>
+            <p className='text-sm text-muted-foreground text-center py-8'>
+                Belum ada transaksi.
+            </p>
         );
     }
 
     return (
-        <div className="space-y-4">
+        <div className='space-y-4'>
             {transactions.map(tx => {
                 const isIncome = tx.type === 'INCOME';
                 return (
-                    <div key={tx.id} className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
+                    <div key={tx.id} className='flex items-center justify-between'>
+                        <div className='flex items-center gap-3'>
                             <div
                                 className={cn(
                                     'flex h-9 w-9 items-center justify-center rounded-full',
@@ -29,16 +32,16 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
                                 )}
                             >
                                 {isIncome ? (
-                                    <ArrowUpRight className="h-4 w-4 text-emerald-400" />
+                                    <ArrowUpRight className='h-4 w-4 text-emerald-400' />
                                 ) : (
-                                    <ArrowDownLeft className="h-4 w-4 text-rose-400" />
+                                    <ArrowDownLeft className='h-4 w-4 text-rose-400' />
                                 )}
                             </div>
                             <div>
-                                <p className="text-sm font-medium leading-none">
+                                <p className='text-sm font-medium leading-none'>
                                     {tx.category.name}
                                 </p>
-                                <p className="text-xs text-muted-foreground mt-1">
+                                <p className='text-xs text-muted-foreground mt-1'>
                                     {format(tx.date, 'd MMM yyyy', { locale: localeId })}
                                 </p>
                             </div>

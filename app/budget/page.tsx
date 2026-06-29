@@ -1,10 +1,10 @@
-import { prisma } from '@/lib/prisma';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BudgetDialog } from '@/components/budget/budget-dialog';
 import { BudgetList } from '@/components/budget/budget-list';
 import { MonthYearFilter } from '@/components/budget/month-year-filter';
-import { formatCurrency, cn } from '@/lib/utils';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { prisma } from '@/lib/prisma';
 import type { BudgetWithProgress } from '@/lib/types';
+import { cn, formatCurrency } from '@/lib/utils';
 
 interface BudgetPageProps {
     searchParams: Promise<{ month?: string; year?: string }>;
@@ -42,7 +42,8 @@ export default async function BudgetPage({ searchParams }: BudgetPageProps) {
             });
 
             const spent = result._sum.amount ?? 0;
-            const percentage = budget.amount > 0 ? Math.round((spent / budget.amount) * 100) : 0;
+            const percentage =
+                budget.amount > 0 ? Math.round((spent / budget.amount) * 100) : 0;
 
             return { ...budget, spent, percentage };
         }),
@@ -56,46 +57,52 @@ export default async function BudgetPage({ searchParams }: BudgetPageProps) {
     const availableCategories = categories.filter(c => !budgetedCategoryIds.has(c.id));
 
     return (
-        <div className="relative space-y-6">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className='relative space-y-6'>
+            <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
                 <div>
-                    <h1 className="text-2xl font-semibold tracking-tight">Budget</h1>
-                    <p className="text-sm text-muted-foreground">
+                    <h1 className='text-2xl font-semibold tracking-tight'>Budget</h1>
+                    <p className='text-sm text-muted-foreground'>
                         Atur batas pengeluaran per kategori setiap bulan.
                     </p>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className='flex items-center gap-3'>
                     <MonthYearFilter month={month} year={year} />
-                    <BudgetDialog categories={availableCategories} month={month} year={year} />
+                    <BudgetDialog
+                        categories={availableCategories}
+                        month={month}
+                        year={year}
+                    />
                 </div>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-3">
+            <div className='grid gap-4 sm:grid-cols-3'>
                 <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground">
+                    <CardHeader className='pb-2'>
+                        <CardTitle className='text-sm font-medium text-muted-foreground'>
                             Total Budget
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">{formatCurrency(totalBudget)}</div>
+                        <div className='text-2xl font-bold'>
+                            {formatCurrency(totalBudget)}
+                        </div>
                     </CardContent>
                 </Card>
                 <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground">
+                    <CardHeader className='pb-2'>
+                        <CardTitle className='text-sm font-medium text-muted-foreground'>
                             Total Terpakai
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold text-rose-400">
+                        <div className='text-2xl font-bold text-rose-400'>
                             {formatCurrency(totalSpent)}
                         </div>
                     </CardContent>
                 </Card>
                 <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground">
+                    <CardHeader className='pb-2'>
+                        <CardTitle className='text-sm font-medium text-muted-foreground'>
                             Sisa Budget
                         </CardTitle>
                     </CardHeader>
@@ -103,7 +110,9 @@ export default async function BudgetPage({ searchParams }: BudgetPageProps) {
                         <div
                             className={cn(
                                 'text-2xl font-bold',
-                                totalRemaining >= 0 ? 'text-emerald-400' : 'text-rose-400',
+                                totalRemaining >= 0
+                                    ? 'text-emerald-400'
+                                    : 'text-rose-400',
                             )}
                         >
                             {formatCurrency(totalRemaining)}

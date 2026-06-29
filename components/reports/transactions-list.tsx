@@ -11,8 +11,8 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { formatCurrency, cn } from '@/lib/utils';
 import type { TransactionWithCategory } from '@/lib/types';
+import { cn, formatCurrency } from '@/lib/utils';
 
 interface TransactionsListProps {
     transactions: TransactionWithCategory[];
@@ -21,14 +21,14 @@ interface TransactionsListProps {
 export function TransactionsList({ transactions }: TransactionsListProps) {
     if (transactions.length === 0) {
         return (
-            <p className="py-6 text-center text-sm text-muted-foreground">
+            <p className='py-6 text-center text-sm text-muted-foreground'>
                 Tidak ada transaksi untuk filter ini.
             </p>
         );
     }
 
     return (
-        <div className="max-h-120 overflow-y-auto rounded-md border border-border">
+        <div className='max-h-120 overflow-y-auto rounded-md border border-border'>
             <Table>
                 <TableHeader>
                     <TableRow>
@@ -36,7 +36,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
                         <TableHead>Kategori</TableHead>
                         <TableHead>Catatan</TableHead>
                         <TableHead>Jenis</TableHead>
-                        <TableHead className="text-right">Jumlah</TableHead>
+                        <TableHead className='text-right'>Jumlah</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -48,12 +48,12 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
                                     {format(tx.date, 'd MMM yyyy', { locale: localeId })}
                                 </TableCell>
                                 <TableCell>{tx.category.name}</TableCell>
-                                <TableCell className="text-muted-foreground">
+                                <TableCell className='text-muted-foreground'>
                                     {tx.description || '-'}
                                 </TableCell>
                                 <TableCell>
                                     <Badge
-                                        variant="outline"
+                                        variant='outline'
                                         className={cn(
                                             'gap-1',
                                             isIncome
@@ -62,9 +62,9 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
                                         )}
                                     >
                                         {isIncome ? (
-                                            <ArrowUpRight className="h-3 w-3" />
+                                            <ArrowUpRight className='h-3 w-3' />
                                         ) : (
-                                            <ArrowDownLeft className="h-3 w-3" />
+                                            <ArrowDownLeft className='h-3 w-3' />
                                         )}
                                         {isIncome ? 'Pemasukan' : 'Pengeluaran'}
                                     </Badge>

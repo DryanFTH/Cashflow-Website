@@ -1,7 +1,7 @@
 'use client';
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { TransactionForm } from '@/components/transactions/transaction-form';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import type { Category } from '@/lib/generated/prisma/client';
 import type { TransactionWithCategory } from '@/lib/types';
 

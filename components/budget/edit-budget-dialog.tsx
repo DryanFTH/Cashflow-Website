@@ -1,7 +1,7 @@
 'use client';
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { BudgetForm } from '@/components/budget/budget-form';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import type { BudgetWithCategory } from '@/lib/types';
 
 interface EditBudgetDialogProps {

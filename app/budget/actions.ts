@@ -1,9 +1,10 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { prisma } from '@/lib/prisma';
+
 import { Prisma } from '@/lib/generated/prisma/client';
-import { budgetSchema, type BudgetFormValues } from '@/lib/validations/budget';
+import { prisma } from '@/lib/prisma';
+import { type BudgetFormValues, budgetSchema } from '@/lib/validations/budget';
 
 type ActionResult = { success: true } | { success: false; error: string };
 
@@ -16,8 +17,14 @@ export async function createBudget(values: BudgetFormValues): Promise<ActionResu
     try {
         await prisma.budget.create({ data: parsed.data });
     } catch (error) {
-        if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
-            return { success: false, error: 'Budget untuk kategori dan periode ini sudah ada.' };
+        if (
+            error instanceof Prisma.PrismaClientKnownRequestError &&
+            error.code === 'P2002'
+        ) {
+            return {
+                success: false,
+                error: 'Budget untuk kategori dan periode ini sudah ada.',
+            };
         }
         console.error(error);
         return { success: false, error: 'Gagal menyimpan budget.' };
@@ -28,7 +35,10 @@ export async function createBudget(values: BudgetFormValues): Promise<ActionResu
     return { success: true };
 }
 
-export async function updateBudget(id: string, values: BudgetFormValues): Promise<ActionResult> {
+export async function updateBudget(
+    id: string,
+    values: BudgetFormValues,
+): Promise<ActionResult> {
     const parsed = budgetSchema.safeParse(values);
     if (!parsed.success) {
         return { success: false, error: 'Data yang dikirim tidak valid.' };
@@ -37,8 +47,14 @@ export async function updateBudget(id: string, values: BudgetFormValues): Promis
     try {
         await prisma.budget.update({ where: { id }, data: parsed.data });
     } catch (error) {
-        if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
-            return { success: false, error: 'Budget untuk kategori dan periode ini sudah ada.' };
+        if (
+            error instanceof Prisma.PrismaClientKnownRequestError &&
+            error.code === 'P2002'
+        ) {
+            return {
+                success: false,
+                error: 'Budget untuk kategori dan periode ini sudah ada.',
+            };
         }
         console.error(error);
         return { success: false, error: 'Gagal memperbarui budget.' };

@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
+
 import {
     Select,
     SelectContent,
@@ -41,9 +42,12 @@ export function MonthYearFilter({ month, year }: MonthYearFilterProps) {
     }
 
     return (
-        <div className="flex items-center gap-2">
-            <Select value={String(month)} onValueChange={value => updateParam('month', value)}>
-                <SelectTrigger className="w-35">
+        <div className='flex items-center gap-2'>
+            <Select
+                value={String(month)}
+                onValueChange={value => updateParam('month', value)}
+            >
+                <SelectTrigger className='w-35'>
                     <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -54,8 +58,11 @@ export function MonthYearFilter({ month, year }: MonthYearFilterProps) {
                     ))}
                 </SelectContent>
             </Select>
-            <Select value={String(year)} onValueChange={value => updateParam('year', value)}>
-                <SelectTrigger className="w-25">
+            <Select
+                value={String(year)}
+                onValueChange={value => updateParam('year', value)}
+            >
+                <SelectTrigger className='w-25'>
                     <SelectValue />
                 </SelectTrigger>
                 <SelectContent>

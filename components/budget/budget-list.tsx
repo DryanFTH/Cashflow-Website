@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+
 import { MoreHorizontal } from 'lucide-react';
 
-import { Progress } from '@/components/ui/progress';
+import { DeleteBudgetDialog } from '@/components/budget/delete-budget-dialog';
+import { EditBudgetDialog } from '@/components/budget/edit-budget-dialog';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -11,10 +13,9 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { EditBudgetDialog } from '@/components/budget/edit-budget-dialog';
-import { DeleteBudgetDialog } from '@/components/budget/delete-budget-dialog';
-import { formatCurrency, cn } from '@/lib/utils';
+import { Progress } from '@/components/ui/progress';
 import type { BudgetWithProgress } from '@/lib/types';
+import { cn, formatCurrency } from '@/lib/utils';
 
 interface BudgetListProps {
     budgets: BudgetWithProgress[];
@@ -26,23 +27,25 @@ export function BudgetList({ budgets }: BudgetListProps) {
 
     if (budgets.length === 0) {
         return (
-            <p className="py-6 text-center text-sm text-muted-foreground">
+            <p className='py-6 text-center text-sm text-muted-foreground'>
                 Belum ada budget untuk periode ini.
             </p>
         );
     }
 
     return (
-        <div className="space-y-5">
+        <div className='space-y-5'>
             {budgets.map(budget => {
                 const isOver = budget.percentage > 100;
                 const isWarning = budget.percentage >= 80 && budget.percentage <= 100;
 
                 return (
-                    <div key={budget.id} className="space-y-2">
-                        <div className="flex items-center justify-between">
-                            <span className="text-sm font-medium">{budget.category.name}</span>
-                            <div className="flex items-center gap-2">
+                    <div key={budget.id} className='space-y-2'>
+                        <div className='flex items-center justify-between'>
+                            <span className='text-sm font-medium'>
+                                {budget.category.name}
+                            </span>
+                            <div className='flex items-center gap-2'>
                                 <span
                                     className={cn(
                                         'text-sm font-medium',
@@ -53,21 +56,28 @@ export function BudgetList({ budgets }: BudgetListProps) {
                                               : 'text-muted-foreground',
                                     )}
                                 >
-                                    {formatCurrency(budget.spent)} / {formatCurrency(budget.amount)}
+                                    {formatCurrency(budget.spent)} /{' '}
+                                    {formatCurrency(budget.amount)}
                                 </span>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
-                                        <Button variant="ghost" size="icon" className="h-7 w-7">
-                                            <MoreHorizontal className="h-4 w-4" />
+                                        <Button
+                                            variant='ghost'
+                                            size='icon'
+                                            className='h-7 w-7'
+                                        >
+                                            <MoreHorizontal className='h-4 w-4' />
                                         </Button>
                                     </DropdownMenuTrigger>
-                                    <DropdownMenuContent align="end">
-                                        <DropdownMenuItem onSelect={() => setEditingBudget(budget)}>
+                                    <DropdownMenuContent align='end'>
+                                        <DropdownMenuItem
+                                            onSelect={() => setEditingBudget(budget)}
+                                        >
                                             Edit
                                         </DropdownMenuItem>
                                         <DropdownMenuItem
                                             onSelect={() => setDeletingBudget(budget)}
-                                            className="text-rose-400"
+                                            className='text-rose-400'
                                         >
                                             Hapus
                                         </DropdownMenuItem>
@@ -84,7 +94,7 @@ export function BudgetList({ budgets }: BudgetListProps) {
                                 !isOver && !isWarning && '[&>div]:bg-emerald-500',
                             )}
                         />
-                        <p className="text-xs text-muted-foreground">
+                        <p className='text-xs text-muted-foreground'>
                             {budget.percentage}% terpakai
                             {isOver &&
                                 ` — melebihi budget ${formatCurrency(budget.spent - budget.amount)}`}

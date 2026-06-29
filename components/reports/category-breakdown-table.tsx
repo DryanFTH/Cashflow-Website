@@ -7,7 +7,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { formatCurrency, cn } from '@/lib/utils';
+import { cn, formatCurrency } from '@/lib/utils';
 
 interface BreakdownItem {
     name: string;
@@ -29,7 +29,7 @@ export function CategoryBreakdownTable({
 }: CategoryBreakdownTableProps) {
     if (breakdown.length === 0) {
         return (
-            <p className="py-6 text-center text-sm text-muted-foreground">
+            <p className='py-6 text-center text-sm text-muted-foreground'>
                 Tidak ada data untuk filter ini.
             </p>
         );
@@ -41,23 +41,24 @@ export function CategoryBreakdownTable({
                 <TableRow>
                     <TableHead>Kategori</TableHead>
                     <TableHead>Jenis</TableHead>
-                    <TableHead className="text-right">Jumlah Transaksi</TableHead>
-                    <TableHead className="text-right">Total</TableHead>
-                    <TableHead className="text-right">Persentase</TableHead>
+                    <TableHead className='text-right'>Jumlah Transaksi</TableHead>
+                    <TableHead className='text-right'>Total</TableHead>
+                    <TableHead className='text-right'>Persentase</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
                 {breakdown.map(item => {
                     const isIncome = item.type === 'INCOME';
                     const base = isIncome ? totalIncome : totalExpense;
-                    const percentage = base > 0 ? Math.round((item.total / base) * 100) : 0;
+                    const percentage =
+                        base > 0 ? Math.round((item.total / base) * 100) : 0;
 
                     return (
                         <TableRow key={item.name}>
-                            <TableCell className="font-medium">{item.name}</TableCell>
+                            <TableCell className='font-medium'>{item.name}</TableCell>
                             <TableCell>
                                 <Badge
-                                    variant="outline"
+                                    variant='outline'
                                     className={cn(
                                         isIncome
                                             ? 'border-emerald-500/40 text-emerald-400'
@@ -67,7 +68,7 @@ export function CategoryBreakdownTable({
                                     {isIncome ? 'Pemasukan' : 'Pengeluaran'}
                                 </Badge>
                             </TableCell>
-                            <TableCell className="text-right">{item.count}</TableCell>
+                            <TableCell className='text-right'>{item.count}</TableCell>
                             <TableCell
                                 className={cn(
                                     'text-right font-medium',
@@ -76,7 +77,7 @@ export function CategoryBreakdownTable({
                             >
                                 {formatCurrency(item.total)}
                             </TableCell>
-                            <TableCell className="text-right text-muted-foreground">
+                            <TableCell className='text-right text-muted-foreground'>
                                 {percentage}%
                             </TableCell>
                         </TableRow>

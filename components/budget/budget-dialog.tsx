@@ -1,7 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+
 import { Plus } from 'lucide-react';
+
+import { BudgetForm } from '@/components/budget/budget-form';
+import { Button } from '@/components/ui/button';
 import {
     Dialog,
     DialogContent,
@@ -9,8 +13,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { BudgetForm } from '@/components/budget/budget-form';
 import type { Category } from '@/lib/generated/prisma/client';
 
 interface BudgetDialogProps {
@@ -33,7 +35,7 @@ export function BudgetDialog({ categories, month, year }: BudgetDialogProps) {
                             : undefined
                     }
                 >
-                    <Plus className="mr-2 h-4 w-4" />
+                    <Plus className='mr-2 h-4 w-4' />
                     Tambah Budget
                 </Button>
             </DialogTrigger>

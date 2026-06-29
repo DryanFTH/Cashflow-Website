@@ -1,12 +1,18 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+
 import { prisma } from '@/lib/prisma';
-import { transactionSchema, type TransactionFormValues } from '@/lib/validations/transaction';
+import {
+    type TransactionFormValues,
+    transactionSchema,
+} from '@/lib/validations/transaction';
 
 type ActionResult = { success: true } | { success: false; error: string };
 
-export async function createTransaction(values: TransactionFormValues): Promise<ActionResult> {
+export async function createTransaction(
+    values: TransactionFormValues,
+): Promise<ActionResult> {
     const parsed = transactionSchema.safeParse(values);
     if (!parsed.success) {
         return { success: false, error: 'Data yang dikirim tidak valid.' };

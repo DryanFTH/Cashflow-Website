@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
+
 import {
     Select,
     SelectContent,
@@ -32,7 +33,12 @@ interface ReportsFilterProps {
     categories: Category[];
 }
 
-export function ReportsFilter({ year, month, categoryId, categories }: ReportsFilterProps) {
+export function ReportsFilter({
+    year,
+    month,
+    categoryId,
+    categories,
+}: ReportsFilterProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
     const years = Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - 4 + i);
@@ -47,13 +53,13 @@ export function ReportsFilter({ year, month, categoryId, categories }: ReportsFi
     }
 
     return (
-        <div className="flex flex-wrap items-center gap-2">
+        <div className='flex flex-wrap items-center gap-2'>
             <Select value={year} onValueChange={value => updateParam('year', value)}>
-                <SelectTrigger className="w-27.5">
+                <SelectTrigger className='w-27.5'>
                     <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="all">Semua Tahun</SelectItem>
+                    <SelectItem value='all'>Semua Tahun</SelectItem>
                     {years.map(y => (
                         <SelectItem key={y} value={String(y)}>
                             {y}
@@ -67,11 +73,11 @@ export function ReportsFilter({ year, month, categoryId, categories }: ReportsFi
                 onValueChange={value => updateParam('month', value)}
                 disabled={year === 'all'}
             >
-                <SelectTrigger className="w-35">
+                <SelectTrigger className='w-35'>
                     <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="all">Semua Bulan</SelectItem>
+                    <SelectItem value='all'>Semua Bulan</SelectItem>
                     {MONTHS.map((name, index) => (
                         <SelectItem key={name} value={String(index + 1)}>
                             {name}
@@ -80,12 +86,15 @@ export function ReportsFilter({ year, month, categoryId, categories }: ReportsFi
                 </SelectContent>
             </Select>
 
-            <Select value={categoryId} onValueChange={value => updateParam('categoryId', value)}>
-                <SelectTrigger className="w-45">
+            <Select
+                value={categoryId}
+                onValueChange={value => updateParam('categoryId', value)}
+            >
+                <SelectTrigger className='w-45'>
                     <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="all">Semua Kategori</SelectItem>
+                    <SelectItem value='all'>Semua Kategori</SelectItem>
                     {categories.map(category => (
                         <SelectItem key={category.id} value={category.id}>
                             {category.name} (

@@ -1,7 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+
 import { toast } from 'sonner';
+
+import { deleteCategory } from '@/app/categories/actions';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -12,7 +15,6 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { deleteCategory } from '@/app/categories/actions';
 
 interface DeleteCategoryDialogProps {
     categoryId: string;
@@ -46,10 +48,12 @@ export function DeleteCategoryDialog({
         <AlertDialog open={open} onOpenChange={onOpenChange}>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Hapus kategori &quot;{categoryName}&quot;?</AlertDialogTitle>
+                    <AlertDialogTitle>
+                        Hapus kategori &quot;{categoryName}&quot;?
+                    </AlertDialogTitle>
                     <AlertDialogDescription>
-                        Tindakan ini tidak bisa dibatalkan. Kategori yang masih dipakai oleh
-                        transaksi tidak dapat dihapus.
+                        Tindakan ini tidak bisa dibatalkan. Kategori yang masih dipakai
+                        oleh transaksi tidak dapat dihapus.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -57,7 +61,7 @@ export function DeleteCategoryDialog({
                     <AlertDialogAction
                         onClick={handleDelete}
                         disabled={isDeleting}
-                        className="bg-rose-600 hover:bg-rose-700 focus:ring-rose-600"
+                        className='bg-rose-600 hover:bg-rose-700 focus:ring-rose-600'
                     >
                         {isDeleting ? 'Menghapus...' : 'Hapus'}
                     </AlertDialogAction>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
+
 import {
     Select,
     SelectContent,
@@ -26,7 +27,7 @@ export function YearFilter({ year }: YearFilterProps) {
 
     return (
         <Select value={String(year)} onValueChange={updateYear}>
-            <SelectTrigger className="w-25">
+            <SelectTrigger className='w-25'>
                 <SelectValue />
             </SelectTrigger>
             <SelectContent>

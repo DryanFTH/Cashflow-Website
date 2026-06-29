@@ -1,8 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
+
+import { deleteTransaction } from '@/app/transactions/actions';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -13,7 +16,6 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { deleteTransaction } from '@/app/transactions/actions';
 
 interface DeleteTransactionDialogProps {
     transactionId: string;
@@ -49,7 +51,8 @@ export function DeleteTransactionDialog({
                 <AlertDialogHeader>
                     <AlertDialogTitle>Hapus transaksi ini?</AlertDialogTitle>
                     <AlertDialogDescription>
-                        Tindakan ini tidak bisa dibatalkan. Data transaksi akan dihapus permanen.
+                        Tindakan ini tidak bisa dibatalkan. Data transaksi akan dihapus
+                        permanen.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -57,7 +60,7 @@ export function DeleteTransactionDialog({
                     <AlertDialogAction
                         onClick={handleDelete}
                         disabled={isDeleting}
-                        className="bg-rose-600 hover:bg-rose-700 focus:ring-rose-600"
+                        className='bg-rose-600 hover:bg-rose-700 focus:ring-rose-600'
                     >
                         {isDeleting ? 'Menghapus...' : 'Hapus'}
                     </AlertDialogAction>

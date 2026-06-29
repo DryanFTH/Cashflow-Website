@@ -1,15 +1,15 @@
-import { prisma } from '@/lib/prisma';
-import { startOfYear, endOfYear, format } from 'date-fns';
+import { endOfYear, format, startOfYear } from 'date-fns';
 import { id as localeId } from 'date-fns/locale';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CashFlowChart } from '@/components/dashboard/cash-flow-chart';
-import { MonthlyComparisonChart } from '@/components/statistics/monthly-comparison-chart';
 import { ExpenseByCategoryChart } from '@/components/statistics/expense-by-category-chart';
-import { IncomeVsExpenseChart } from '@/components/statistics/income-vs-expense-chart';
 import { FinancialInsights } from '@/components/statistics/financial-insights';
+import { IncomeVsExpenseChart } from '@/components/statistics/income-vs-expense-chart';
+import { MonthlyComparisonChart } from '@/components/statistics/monthly-comparison-chart';
 import { YearFilter } from '@/components/statistics/year-filter';
-import { formatCurrency, cn } from '@/lib/utils';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { prisma } from '@/lib/prisma';
+import { cn, formatCurrency } from '@/lib/utils';
 
 interface StatisticsPageProps {
     searchParams: Promise<{ year?: string }>;
@@ -50,17 +50,23 @@ export default async function StatisticsPage({ searchParams }: StatisticsPagePro
         if (existing) {
             existing.total += tx.amount;
         } else {
-            categoryTotals.set(tx.categoryId, { name: tx.category.name, total: tx.amount });
+            categoryTotals.set(tx.categoryId, {
+                name: tx.category.name,
+                total: tx.amount,
+            });
         }
     }
-    const expenseByCategory = Array.from(categoryTotals.values()).sort((a, b) => b.total - a.total);
+    const expenseByCategory = Array.from(categoryTotals.values()).sort(
+        (a, b) => b.total - a.total,
+    );
 
     const totalIncome = transactions
         .filter(t => t.type === 'INCOME')
         .reduce((sum, t) => sum + t.amount, 0);
     const totalExpense = expenseTx.reduce((sum, t) => sum + t.amount, 0);
     const netSavings = totalIncome - totalExpense;
-    const savingsRate = totalIncome > 0 ? Math.round((netSavings / totalIncome) * 100) : 0;
+    const savingsRate =
+        totalIncome > 0 ? Math.round((netSavings / totalIncome) * 100) : 0;
 
     const insights: { icon: 'up' | 'down' | 'piggy' | 'warning'; text: string }[] = [];
 
@@ -80,7 +86,8 @@ export default async function StatisticsPage({ searchParams }: StatisticsPagePro
 
     if (expenseByCategory.length > 0) {
         const top = expenseByCategory[0];
-        const percent = totalExpense > 0 ? Math.round((top.total / totalExpense) * 100) : 0;
+        const percent =
+            totalExpense > 0 ? Math.round((top.total / totalExpense) * 100) : 0;
         insights.push({
             icon: 'down',
             text: `Kategori pengeluaran terbesar adalah "${top.name}" dengan total ${formatCurrency(top.total)} (${percent}% dari seluruh pengeluaran).`,
@@ -110,45 +117,45 @@ export default async function StatisticsPage({ searchParams }: StatisticsPagePro
     }
 
     return (
-        <div className="relative space-y-6">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className='relative space-y-6'>
+            <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
                 <div>
-                    <h1 className="text-2xl font-semibold tracking-tight">Statistik</h1>
-                    <p className="text-sm text-muted-foreground">
+                    <h1 className='text-2xl font-semibold tracking-tight'>Statistik</h1>
+                    <p className='text-sm text-muted-foreground'>
                         Analisis cash flow dan kebiasaan keuangan kamu tahun {year}.
                     </p>
                 </div>
                 <YearFilter year={year} />
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-3">
+            <div className='grid gap-4 sm:grid-cols-3'>
                 <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground">
+                    <CardHeader className='pb-2'>
+                        <CardTitle className='text-sm font-medium text-muted-foreground'>
                             Total Pemasukan
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold text-emerald-400">
+                        <div className='text-2xl font-bold text-emerald-400'>
                             {formatCurrency(totalIncome)}
                         </div>
                     </CardContent>
                 </Card>
                 <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground">
+                    <CardHeader className='pb-2'>
+                        <CardTitle className='text-sm font-medium text-muted-foreground'>
                             Total Pengeluaran
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold text-rose-400">
+                        <div className='text-2xl font-bold text-rose-400'>
                             {formatCurrency(totalExpense)}
                         </div>
                     </CardContent>
                 </Card>
                 <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground">
+                    <CardHeader className='pb-2'>
+                        <CardTitle className='text-sm font-medium text-muted-foreground'>
                             Selisih Bersih
                         </CardTitle>
                     </CardHeader>
@@ -165,7 +172,7 @@ export default async function StatisticsPage({ searchParams }: StatisticsPagePro
                 </Card>
             </div>
 
-            <div className="grid gap-6 lg:grid-cols-2">
+            <div className='grid gap-6 lg:grid-cols-2'>
                 <Card>
                     <CardHeader>
                         <CardTitle>Cash Flow {year}</CardTitle>

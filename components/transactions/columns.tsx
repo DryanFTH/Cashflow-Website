@@ -1,16 +1,16 @@
 'use client';
 
-import { ColumnDef, Column } from '@tanstack/react-table';
-import {
-    ArrowDownLeft,
-    ArrowUpRight,
-    ArrowUp,
-    ArrowDown,
-    ArrowUpDown,
-    MoreHorizontal,
-} from 'lucide-react';
+import { Column, ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
 import { id as localeId } from 'date-fns/locale';
+import {
+    ArrowDown,
+    ArrowDownLeft,
+    ArrowUp,
+    ArrowUpDown,
+    ArrowUpRight,
+    MoreHorizontal,
+} from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -20,8 +20,8 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { formatCurrency, cn } from '@/lib/utils';
 import type { TransactionWithCategory } from '@/lib/types';
+import { cn, formatCurrency } from '@/lib/utils';
 
 interface ColumnsProps {
     onEdit: (transaction: TransactionWithCategory) => void;
@@ -43,8 +43,8 @@ function SortableHeader({
 
     return (
         <Button
-            variant="ghost"
-            size="sm"
+            variant='ghost'
+            size='sm'
             onClick={column.getToggleSortingHandler()}
             className={cn(
                 'h-8 gap-1.5 px-2 text-xs font-medium text-muted-foreground hover:text-foreground',
@@ -53,11 +53,11 @@ function SortableHeader({
         >
             {label}
             {sorted === 'asc' ? (
-                <ArrowUp className="h-3.5 w-3.5" />
+                <ArrowUp className='h-3.5 w-3.5' />
             ) : sorted === 'desc' ? (
-                <ArrowDown className="h-3.5 w-3.5" />
+                <ArrowDown className='h-3.5 w-3.5' />
             ) : (
-                <ArrowUpDown className="h-3.5 w-3.5 opacity-40" />
+                <ArrowUpDown className='h-3.5 w-3.5 opacity-40' />
             )}
         </Button>
     );
@@ -70,12 +70,13 @@ export function getColumns({
     return [
         {
             accessorKey: 'date',
-            header: ({ column }) => <SortableHeader label="Tanggal" column={column} />,
-            cell: ({ row }) => format(row.original.date, 'd MMM yyyy', { locale: localeId }),
+            header: ({ column }) => <SortableHeader label='Tanggal' column={column} />,
+            cell: ({ row }) =>
+                format(row.original.date, 'd MMM yyyy', { locale: localeId }),
         },
         {
             accessorKey: 'category',
-            header: ({ column }) => <SortableHeader label="Kategori" column={column} />,
+            header: ({ column }) => <SortableHeader label='Kategori' column={column} />,
             cell: ({ row }) => row.original.category.name,
         },
         {
@@ -83,7 +84,9 @@ export function getColumns({
             header: 'Catatan',
             enableSorting: false,
             cell: ({ row }) => (
-                <span className="text-muted-foreground">{row.original.description || '-'}</span>
+                <span className='text-muted-foreground'>
+                    {row.original.description || '-'}
+                </span>
             ),
         },
         {
@@ -94,7 +97,7 @@ export function getColumns({
                 const isIncome = row.original.type === 'INCOME';
                 return (
                     <Badge
-                        variant="outline"
+                        variant='outline'
                         className={cn(
                             'gap-1',
                             isIncome
@@ -103,9 +106,9 @@ export function getColumns({
                         )}
                     >
                         {isIncome ? (
-                            <ArrowUpRight className="h-3 w-3" />
+                            <ArrowUpRight className='h-3 w-3' />
                         ) : (
-                            <ArrowDownLeft className="h-3 w-3" />
+                            <ArrowDownLeft className='h-3 w-3' />
                         )}
                         {isIncome ? 'Pemasukan' : 'Pengeluaran'}
                     </Badge>
@@ -115,8 +118,8 @@ export function getColumns({
         {
             accessorKey: 'amount',
             header: ({ column }) => (
-                <div className="text-right">
-                    <SortableHeader label="Jumlah" column={column} align="right" />
+                <div className='text-right'>
+                    <SortableHeader label='Jumlah' column={column} align='right' />
                 </div>
             ),
             cell: ({ row }) => {
@@ -140,17 +143,17 @@ export function getColumns({
             cell: ({ row }) => (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                            <MoreHorizontal className="h-4 w-4" />
+                        <Button variant='ghost' size='icon' className='h-8 w-8'>
+                            <MoreHorizontal className='h-4 w-4' />
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
+                    <DropdownMenuContent align='end'>
                         <DropdownMenuItem onSelect={() => onEdit(row.original)}>
                             Edit
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             onSelect={() => onDelete(row.original.id)}
-                            className="text-rose-400"
+                            className='text-rose-400'
                         >
                             Hapus
                         </DropdownMenuItem>

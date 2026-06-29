@@ -1,7 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+
 import { Plus } from 'lucide-react';
+
+import { TransactionForm } from '@/components/transactions/transaction-form';
+import { Button } from '@/components/ui/button';
 import {
     Dialog,
     DialogContent,
@@ -9,8 +13,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { TransactionForm } from '@/components/transactions/transaction-form';
 import type { Category } from '@/lib/generated/prisma/client';
 
 export function TransactionDialog({ categories }: { categories: Category[] }) {
@@ -21,9 +23,13 @@ export function TransactionDialog({ categories }: { categories: Category[] }) {
             <DialogTrigger asChild>
                 <Button
                     disabled={categories.length === 0}
-                    title={categories.length === 0 ? 'Buat kategori terlebih dahulu' : undefined}
+                    title={
+                        categories.length === 0
+                            ? 'Buat kategori terlebih dahulu'
+                            : undefined
+                    }
                 >
-                    <Plus className="mr-2 h-4 w-4" />
+                    <Plus className='mr-2 h-4 w-4' />
                     Tambah Transaksi
                 </Button>
             </DialogTrigger>
@@ -31,7 +37,10 @@ export function TransactionDialog({ categories }: { categories: Category[] }) {
                 <DialogHeader>
                     <DialogTitle>Tambah Transaksi</DialogTitle>
                 </DialogHeader>
-                <TransactionForm categories={categories} onSuccess={() => setOpen(false)} />
+                <TransactionForm
+                    categories={categories}
+                    onSuccess={() => setOpen(false)}
+                />
             </DialogContent>
         </Dialog>
     );

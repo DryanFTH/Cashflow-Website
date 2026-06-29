@@ -1,7 +1,7 @@
 'use client';
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { CategoryForm } from '@/components/categories/category-form';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import type { Category } from '@/lib/generated/prisma/client';
 
 interface EditCategoryDialogProps {
@@ -10,7 +10,11 @@ interface EditCategoryDialogProps {
     onOpenChange: (open: boolean) => void;
 }
 
-export function EditCategoryDialog({ category, open, onOpenChange }: EditCategoryDialogProps) {
+export function EditCategoryDialog({
+    category,
+    open,
+    onOpenChange,
+}: EditCategoryDialogProps) {
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent>

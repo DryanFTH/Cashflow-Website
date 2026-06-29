@@ -1,9 +1,10 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { prisma } from '@/lib/prisma';
+
 import { Prisma } from '@/lib/generated/prisma/client';
-import { categorySchema, type CategoryFormValues } from '@/lib/validations/category';
+import { prisma } from '@/lib/prisma';
+import { type CategoryFormValues, categorySchema } from '@/lib/validations/category';
 
 type ActionResult = { success: true } | { success: false; error: string };
 
@@ -16,8 +17,14 @@ export async function createCategory(values: CategoryFormValues): Promise<Action
     try {
         await prisma.category.create({ data: parsed.data });
     } catch (error) {
-        if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
-            return { success: false, error: 'Kategori dengan nama dan jenis ini sudah ada.' };
+        if (
+            error instanceof Prisma.PrismaClientKnownRequestError &&
+            error.code === 'P2002'
+        ) {
+            return {
+                success: false,
+                error: 'Kategori dengan nama dan jenis ini sudah ada.',
+            };
         }
         console.error(error);
         return { success: false, error: 'Gagal menyimpan kategori.' };
@@ -41,8 +48,14 @@ export async function updateCategory(
     try {
         await prisma.category.update({ where: { id }, data: parsed.data });
     } catch (error) {
-        if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
-            return { success: false, error: 'Kategori dengan nama dan jenis ini sudah ada.' };
+        if (
+            error instanceof Prisma.PrismaClientKnownRequestError &&
+            error.code === 'P2002'
+        ) {
+            return {
+                success: false,
+                error: 'Kategori dengan nama dan jenis ini sudah ada.',
+            };
         }
         console.error(error);
         return { success: false, error: 'Gagal memperbarui kategori.' };
@@ -58,7 +71,10 @@ export async function deleteCategory(id: string): Promise<ActionResult> {
     try {
         await prisma.category.delete({ where: { id } });
     } catch (error) {
-        if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2003') {
+        if (
+            error instanceof Prisma.PrismaClientKnownRequestError &&
+            error.code === 'P2003'
+        ) {
             return {
                 success: false,
                 error: 'Kategori tidak bisa dihapus karena masih dipakai oleh transaksi.',

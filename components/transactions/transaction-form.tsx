@@ -1,15 +1,15 @@
 'use client';
 
-import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
 import { format } from 'date-fns';
+import { Controller, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
+import { createTransaction, updateTransaction } from '@/app/transactions/actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import {
     Select,
     SelectContent,
@@ -17,14 +17,14 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import {
-    TransactionFormInput,
-    transactionSchema,
-    type TransactionFormValues,
-} from '@/lib/validations/transaction';
-import { createTransaction, updateTransaction } from '@/app/transactions/actions';
+import { Textarea } from '@/components/ui/textarea';
 import type { Category } from '@/lib/generated/prisma/client';
 import { cn } from '@/lib/utils';
+import {
+    TransactionFormInput,
+    type TransactionFormValues,
+    transactionSchema,
+} from '@/lib/validations/transaction';
 
 interface TransactionFormProps {
     categories: Category[];
@@ -80,10 +80,10 @@ export function TransactionForm({
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-2 gap-3">
+        <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
+            <div className='grid grid-cols-2 gap-3'>
                 <button
-                    type="button"
+                    type='button'
                     onClick={() => {
                         setValue('type', 'EXPENSE');
                         setValue('categoryId', '');
@@ -98,7 +98,7 @@ export function TransactionForm({
                     Pengeluaran
                 </button>
                 <button
-                    type="button"
+                    type='button'
                     onClick={() => {
                         setValue('type', 'INCOME');
                         setValue('categoryId', '');
@@ -114,33 +114,37 @@ export function TransactionForm({
                 </button>
             </div>
 
-            <div className="space-y-2">
-                <Label htmlFor="amount">Jumlah</Label>
+            <div className='space-y-2'>
+                <Label htmlFor='amount'>Jumlah</Label>
                 <Input
-                    id="amount"
-                    type="number"
-                    step="any"
-                    placeholder="0"
+                    id='amount'
+                    type='number'
+                    step='any'
+                    placeholder='0'
                     {...register('amount')}
                 />
-                {errors.amount && <p className="text-xs text-rose-400">{errors.amount.message}</p>}
+                {errors.amount && (
+                    <p className='text-xs text-rose-400'>{errors.amount.message}</p>
+                )}
             </div>
 
-            <div className="space-y-2">
-                <Label htmlFor="categoryId">Kategori</Label>
+            <div className='space-y-2'>
+                <Label htmlFor='categoryId'>Kategori</Label>
                 <Controller
                     control={control}
-                    name="categoryId"
+                    name='categoryId'
                     render={({ field }) => (
                         <Select value={field.value} onValueChange={field.onChange}>
-                            <SelectTrigger id="categoryId">
-                                <SelectValue placeholder="Pilih kategori" />
+                            <SelectTrigger id='categoryId'>
+                                <SelectValue placeholder='Pilih kategori' />
                             </SelectTrigger>
                             <SelectContent>
                                 {filteredCategories.length === 0 ? (
-                                    <div className="px-3 py-2 text-sm text-muted-foreground">
+                                    <div className='px-3 py-2 text-sm text-muted-foreground'>
                                         Belum ada kategori{' '}
-                                        {selectedType === 'INCOME' ? 'pemasukan' : 'pengeluaran'}
+                                        {selectedType === 'INCOME'
+                                            ? 'pemasukan'
+                                            : 'pengeluaran'}
                                     </div>
                                 ) : (
                                     filteredCategories.map(category => (
@@ -154,15 +158,15 @@ export function TransactionForm({
                     )}
                 />
                 {errors.categoryId && (
-                    <p className="text-xs text-rose-400">{errors.categoryId.message}</p>
+                    <p className='text-xs text-rose-400'>{errors.categoryId.message}</p>
                 )}
             </div>
 
-            <div className="space-y-2">
-                <Label htmlFor="date">Tanggal</Label>
+            <div className='space-y-2'>
+                <Label htmlFor='date'>Tanggal</Label>
                 <Input
-                    id="date"
-                    type="date"
+                    id='date'
+                    type='date'
                     defaultValue={format(defaultValues?.date ?? new Date(), 'yyyy-MM-dd')}
                     onChange={e => {
                         if (!(e.target instanceof HTMLInputElement)) return;
@@ -170,20 +174,26 @@ export function TransactionForm({
                         setValue('date', new Date(e.target.value));
                     }}
                 />
-                {errors.date && <p className="text-xs text-rose-400">{errors.date.message}</p>}
+                {errors.date && (
+                    <p className='text-xs text-rose-400'>{errors.date.message}</p>
+                )}
             </div>
 
-            <div className="space-y-2">
-                <Label htmlFor="description">Catatan (opsional)</Label>
+            <div className='space-y-2'>
+                <Label htmlFor='description'>Catatan (opsional)</Label>
                 <Textarea
-                    id="description"
-                    placeholder="Contoh: Makan siang bersama tim"
+                    id='description'
+                    placeholder='Contoh: Makan siang bersama tim'
                     {...register('description')}
                 />
             </div>
 
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? 'Menyimpan...' : isEdit ? 'Simpan Perubahan' : 'Tambah Transaksi'}
+            <Button type='submit' className='w-full' disabled={isSubmitting}>
+                {isSubmitting
+                    ? 'Menyimpan...'
+                    : isEdit
+                      ? 'Simpan Perubahan'
+                      : 'Tambah Transaksi'}
             </Button>
         </form>
     );

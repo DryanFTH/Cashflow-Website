@@ -1,7 +1,8 @@
-import { prisma } from '@/lib/prisma';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { TransactionDialog } from '@/components/transactions/transaction-dialog';
 import { TransactionsTable } from '@/components/transactions/transactions-table';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { prisma } from '@/lib/prisma';
+
 import { getTransactions } from './actions';
 
 export default async function TransactionsPage() {
@@ -11,11 +12,11 @@ export default async function TransactionsPage() {
     ]);
 
     return (
-        <div className="relative space-y-6">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className='relative space-y-6'>
+            <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
                 <div>
-                    <h1 className="text-2xl font-semibold tracking-tight">Transaksi</h1>
-                    <p className="text-sm text-muted-foreground">
+                    <h1 className='text-2xl font-semibold tracking-tight'>Transaksi</h1>
+                    <p className='text-sm text-muted-foreground'>
                         Kelola seluruh pemasukan dan pengeluaran kamu.
                     </p>
                 </div>
@@ -23,9 +24,9 @@ export default async function TransactionsPage() {
             </div>
 
             {categories.length === 0 && (
-                <p className="text-sm text-amber-400">
-                    Kamu belum punya kategori. Buat kategori dulu (akan kita buat di langkah
-                    selanjutnya) sebelum menambah transaksi.
+                <p className='text-sm text-amber-400'>
+                    Kamu belum punya kategori. Buat kategori dulu (akan kita buat di
+                    langkah selanjutnya) sebelum menambah transaksi.
                 </p>
             )}
 

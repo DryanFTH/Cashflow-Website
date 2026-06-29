@@ -1,8 +1,10 @@
 'use client';
 
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { formatCurrency } from '@/lib/utils';
 import { useMemo } from 'react';
+
+import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
+
+import { formatCurrency } from '@/lib/utils';
 
 const COLORS = [
     '#f43f5e',
@@ -27,7 +29,7 @@ interface ExpenseByCategoryChartProps {
 export function ExpenseByCategoryChart({ data }: ExpenseByCategoryChartProps) {
     if (data.length === 0) {
         return (
-            <p className="py-12 text-center text-sm text-muted-foreground">
+            <p className='py-12 text-center text-sm text-muted-foreground'>
                 Belum ada data pengeluaran untuk periode ini.
             </p>
         );
@@ -43,14 +45,14 @@ export function ExpenseByCategoryChart({ data }: ExpenseByCategoryChartProps) {
     );
 
     return (
-        <ResponsiveContainer width="100%" height={320}>
+        <ResponsiveContainer width='100%' height={320}>
             <PieChart>
                 <Pie
                     data={chartData}
-                    dataKey="total"
-                    nameKey="name"
-                    cx="50%"
-                    cy="50%"
+                    dataKey='total'
+                    nameKey='name'
+                    cx='50%'
+                    cy='50%'
                     innerRadius={70}
                     outerRadius={110}
                     paddingAngle={2}
@@ -71,9 +73,9 @@ export function ExpenseByCategoryChart({ data }: ExpenseByCategoryChartProps) {
                     }}
                 />
                 <Legend
-                    layout="vertical"
-                    align="right"
-                    verticalAlign="middle"
+                    layout='vertical'
+                    align='right'
+                    verticalAlign='middle'
                     wrapperStyle={{ fontSize: '12px' }}
                 />
             </PieChart>

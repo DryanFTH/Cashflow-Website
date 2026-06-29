@@ -1,11 +1,12 @@
-import { prisma } from '@/lib/prisma';
-import { startOfMonth, endOfMonth, subMonths, format } from 'date-fns';
+import { endOfMonth, format, startOfMonth, subMonths } from 'date-fns';
 import { id as localeId } from 'date-fns/locale';
-import { Wallet, TrendingUp, TrendingDown, PiggyBank } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { formatCurrency } from '@/lib/utils';
+import { PiggyBank, TrendingDown, TrendingUp, Wallet } from 'lucide-react';
+
 import { CashFlowChart } from '@/components/dashboard/cash-flow-chart';
 import { RecentTransactions } from '@/components/dashboard/recent-transactions';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { prisma } from '@/lib/prisma';
+import { formatCurrency } from '@/lib/utils';
 
 export default async function DashboardPage() {
     const now = new Date();
@@ -53,7 +54,12 @@ export default async function DashboardPage() {
     );
 
     const summaryCards = [
-        { title: 'Total Saldo', value: totalBalance, icon: Wallet, color: 'text-blue-400' },
+        {
+            title: 'Total Saldo',
+            value: totalBalance,
+            icon: Wallet,
+            color: 'text-blue-400',
+        },
         {
             title: 'Pemasukan Bulan Ini',
             value: monthIncome,
@@ -75,32 +81,35 @@ export default async function DashboardPage() {
     ];
 
     return (
-        <div className="relative space-y-6">
+        <div className='relative space-y-6'>
             <div>
-                <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
-                <p className="text-sm text-muted-foreground">
-                    Ringkasan kondisi keuangan — {format(now, 'MMMM yyyy', { locale: localeId })}
+                <h1 className='text-2xl font-semibold tracking-tight'>Dashboard</h1>
+                <p className='text-sm text-muted-foreground'>
+                    Ringkasan kondisi keuangan —{' '}
+                    {format(now, 'MMMM yyyy', { locale: localeId })}
                 </p>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
                 {summaryCards.map(card => (
                     <Card key={card.title}>
-                        <CardHeader className="flex flex-row items-center justify-between pb-2">
-                            <CardTitle className="text-sm font-medium text-muted-foreground">
+                        <CardHeader className='flex flex-row items-center justify-between pb-2'>
+                            <CardTitle className='text-sm font-medium text-muted-foreground'>
                                 {card.title}
                             </CardTitle>
                             <card.icon className={`h-4 w-4 ${card.color}`} />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold">{formatCurrency(card.value)}</div>
+                            <div className='text-2xl font-bold'>
+                                {formatCurrency(card.value)}
+                            </div>
                         </CardContent>
                     </Card>
                 ))}
             </div>
 
-            <div className="grid gap-4 lg:grid-cols-3">
-                <Card className="lg:col-span-2 text-foreground">
+            <div className='grid gap-4 lg:grid-cols-3'>
+                <Card className='lg:col-span-2 text-foreground'>
                     <CardHeader>
                         <CardTitle>Cash Flow — 6 Bulan Terakhir</CardTitle>
                     </CardHeader>
