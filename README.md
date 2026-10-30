@@ -201,3 +201,14 @@ pnpm build
 
 Keep changes focused, include database migrations when modifying the Prisma
 schema, and avoid committing personal data or environment files.
+
+## License
+
+Cashflow is released under the **[MIT License](LICENSE)**. You are free to use,
+modify, distribute, and reuse the source code in personal or commercial
+projects, provided that the required copyright and license notices are kept
+intact.
+
+**Important:** The MIT License applies only to the source code in this
+repository. Third-party packages and tools used by this project remain subject
+to their own licenses.
